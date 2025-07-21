@@ -1,0 +1,19 @@
+
+> @saga-soa/example-rest@1.0.0 build /home/spaul/dev/saga-soa/apps/example_rest
+> tsup
+
+CLI Building entry: src/inversify.config.ts, src/main.ts, src/sectors/hello-again-rest.ts, src/sectors/hello-rest.ts
+CLI Using tsconfig: tsconfig.json
+CLI tsup v8.5.0
+CLI Using tsup config: /home/spaul/dev/saga-soa/apps/example_rest/tsup.config.ts
+CLI Target: es2022
+CLI Cleaning output folder
+ESM Build start
+ESM dist/inversify.config.js         154.00 B
+ESM dist/sectors/hello-again-rest.js 117.00 B
+ESM dist/main.js                     525.00 B
+ESM dist/sectors/hello-rest.js       107.00 B
+ESM dist/chunk-NGICDVII.js           1.58 KB
+ESM dist/chunk-GOYQ4LZK.js           1.26 KB
+ESM dist/chunk-SHUYVCID.js           151.00 B
+ESM ⚡️ Build success in 18ms

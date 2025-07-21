@@ -1,0 +1,75 @@
+
+
+> graphql-api@1.0.0 build /home/spaul/dev/saga-soa/apps/examples/graphql-api
+> tsup
+
+[34mCLI[39m Building entry: src/inversify.config.ts, src/main.ts, src/sectors/index.ts, src/sectors/session/index.ts, src/sectors/user/index.ts, src/sectors/session/gql/index.ts, src/sectors/session/gql/session.data.ts, src/sectors/session/gql/session.input.ts, src/sectors/session/gql/session.resolver.ts, src/sectors/session/gql/session.type.ts, src/sectors/session/rest/session-routes.ts, src/sectors/user/gql/index.ts, src/sectors/user/gql/user.data.ts, src/sectors/user/gql/user.input.ts, src/sectors/user/gql/user.resolver.ts, src/sectors/user/gql/user.type.ts, src/sectors/user/rest/user-routes.ts
+[34mCLI[39m Using tsconfig: tsconfig.json
+[34mCLI[39m tsup v8.5.0
+[34mCLI[39m Using tsup config: /home/spaul/dev/saga-soa/apps/examples/graphql-api/tsup.config.ts
+[34mCLI[39m Target: es2022
+[34mCLI[39m Cleaning output folder
+[34mESM[39m Build start
+[32mESM[39m [1mdist/inversify.config.js                         [22m[32m149.00 B[39m
+[32mESM[39m [1mdist/chunk-DQXPPVM6.js                           [22m[32m1.03 KB[39m
+[32mESM[39m [1mdist/main.js                                     [22m[32m1.96 KB[39m
+[32mESM[39m [1mdist/chunk-MWJUYY3S.js                           [22m[32m42.00 B[39m
+[32mESM[39m [1mdist/chunk-4I32K4KW.js                           [22m[32m42.00 B[39m
+[32mESM[39m [1mdist/chunk-FLK3B32K.js                           [22m[32m42.00 B[39m
+[32mESM[39m [1mdist/chunk-Q2WF2TWV.js                           [22m[32m2.80 KB[39m
+[32mESM[39m [1mdist/chunk-A4USCWRD.js                           [22m[32m481.00 B[39m
+[32mESM[39m [1mdist/chunk-ODCTC6ND.js                           [22m[32m1.48 KB[39m
+[32mESM[39m [1mdist/chunk-K6QKO6DM.js                           [22m[32m1.41 KB[39m
+[32mESM[39m [1mdist/chunk-SFUUY45Y.js                           [22m[32m42.00 B[39m
+[32mESM[39m [1mdist/chunk-LF2HXUIZ.js                           [22m[32m2.90 KB[39m
+[32mESM[39m [1mdist/chunk-EXJUTQ3R.js                           [22m[32m1.80 KB[39m
+[32mESM[39m [1mdist/chunk-ZONZ23MC.js                           [22m[32m547.00 B[39m
+[32mESM[39m [1mdist/chunk-3OH7VBAU.js                           [22m[32m1.73 KB[39m
+[32mESM[39m [1mdist/chunk-7QVYU63E.js                           [22m[32m193.00 B[39m
+[32mESM[39m [1mdist/sectors/session/gql/index.js                [22m[32m514.00 B[39m
+[32mESM[39m [1mdist/sectors/session/index.js                    [22m[32m530.00 B[39m
+[32mESM[39m [1mdist/sectors/user/index.js                       [22m[32m488.00 B[39m
+[32mESM[39m [1mdist/sectors/index.js                            [22m[32m901.00 B[39m
+[32mESM[39m [1mdist/sectors/session/gql/session.data.js         [22m[32m257.00 B[39m
+[32mESM[39m [1mdist/sectors/session/gql/session.input.js        [22m[32m166.00 B[39m
+[32mESM[39m [1mdist/inversify.config.js.map                     [22m[32m71.00 B[39m
+[32mESM[39m [1mdist/sectors/user/rest/user-routes.js            [22m[32m2.07 KB[39m
+[32mESM[39m [1mdist/sectors/user/gql/index.js                   [22m[32m472.00 B[39m
+[32mESM[39m [1mdist/chunk-DQXPPVM6.js.map                       [22m[32m2.45 KB[39m
+[32mESM[39m [1mdist/main.js.map                                 [22m[32m4.56 KB[39m
+[32mESM[39m [1mdist/chunk-MWJUYY3S.js.map                       [22m[32m71.00 B[39m
+[32mESM[39m [1mdist/chunk-4I32K4KW.js.map                       [22m[32m71.00 B[39m
+[32mESM[39m [1mdist/chunk-Q2WF2TWV.js.map                       [22m[32m1.81 KB[39m
+[32mESM[39m [1mdist/chunk-FLK3B32K.js.map                       [22m[32m71.00 B[39m
+[32mESM[39m [1mdist/chunk-ODCTC6ND.js.map                       [22m[32m578.00 B[39m
+[32mESM[39m [1mdist/chunk-K6QKO6DM.js.map                       [22m[32m504.00 B[39m
+[32mESM[39m [1mdist/chunk-A4USCWRD.js.map                       [22m[32m712.00 B[39m
+[32mESM[39m [1mdist/chunk-SFUUY45Y.js.map                       [22m[32m71.00 B[39m
+[32mESM[39m [1mdist/chunk-LF2HXUIZ.js.map                       [22m[32m1.92 KB[39m
+[32mESM[39m [1mdist/chunk-EXJUTQ3R.js.map                       [22m[32m755.00 B[39m
+[32mESM[39m [1mdist/chunk-ZONZ23MC.js.map                       [22m[32m776.00 B[39m
+[32mESM[39m [1mdist/chunk-3OH7VBAU.js.map                       [22m[32m665.00 B[39m
+[32mESM[39m [1mdist/sectors/session/gql/session.type.js         [22m[32m155.00 B[39m
+[32mESM[39m [1mdist/sectors/user/gql/user.input.js              [22m[32m157.00 B[39m
+[32mESM[39m [1mdist/sectors/user/gql/user.resolver.js           [22m[32m277.00 B[39m
+[32mESM[39m [1mdist/sectors/user/gql/user.type.js               [22m[32m146.00 B[39m
+[32mESM[39m [1mdist/chunk-7QVYU63E.js.map                       [22m[32m71.00 B[39m
+[32mESM[39m [1mdist/sectors/session/rest/session-routes.js      [22m[32m2.10 KB[39m
+[32mESM[39m [1mdist/sectors/session/gql/index.js.map            [22m[32m71.00 B[39m
+[32mESM[39m [1mdist/sectors/session/index.js.map                [22m[32m71.00 B[39m
+[32mESM[39m [1mdist/sectors/session/gql/session.resolver.js     [22m[32m286.00 B[39m
+[32mESM[39m [1mdist/sectors/user/gql/user.data.js               [22m[32m230.00 B[39m
+[32mESM[39m [1mdist/sectors/user/index.js.map                   [22m[32m71.00 B[39m
+[32mESM[39m [1mdist/sectors/index.js.map                        [22m[32m71.00 B[39m
+[32mESM[39m [1mdist/sectors/session/gql/session.data.js.map     [22m[32m71.00 B[39m
+[32mESM[39m [1mdist/sectors/session/gql/session.input.js.map    [22m[32m71.00 B[39m
+[32mESM[39m [1mdist/sectors/user/rest/user-routes.js.map        [22m[32m1.34 KB[39m
+[32mESM[39m [1mdist/sectors/user/gql/index.js.map               [22m[32m71.00 B[39m
+[32mESM[39m [1mdist/sectors/session/gql/session.type.js.map     [22m[32m71.00 B[39m
+[32mESM[39m [1mdist/sectors/user/gql/user.input.js.map          [22m[32m71.00 B[39m
+[32mESM[39m [1mdist/sectors/user/gql/user.resolver.js.map       [22m[32m71.00 B[39m
+[32mESM[39m [1mdist/sectors/user/gql/user.type.js.map           [22m[32m71.00 B[39m
+[32mESM[39m [1mdist/sectors/session/rest/session-routes.js.map  [22m[32m1.36 KB[39m
+[32mESM[39m [1mdist/sectors/session/gql/session.resolver.js.map [22m[32m71.00 B[39m
+[32mESM[39m [1mdist/sectors/user/gql/user.data.js.map           [22m[32m71.00 B[39m
+[32mESM[39m ⚡️ Build success in 27ms

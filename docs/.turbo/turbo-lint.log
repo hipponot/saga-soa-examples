@@ -1,0 +1,5 @@
+
+> docs@0.1.0 lint /home/spaul/dev/saga-soa/apps/docs
+> next lint --max-warnings 0
+
+✔ No ESLint warnings or errors

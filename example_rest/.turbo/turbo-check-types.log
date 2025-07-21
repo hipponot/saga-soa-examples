@@ -1,0 +1,4 @@
+
+> @saga-soa/example-rest@1.0.0 check-types /home/spaul/dev/saga-soa/apps/example_rest
+> tsc --noEmit
+

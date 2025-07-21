@@ -1,0 +1,31 @@
+
+
+> rest-api@1.0.0 build /home/spaul/dev/saga-soa/apps/examples/rest-api
+> tsup
+
+[34mCLI[39m Building entry: src/inversify.config.ts, src/main.ts, src/__tests__/integration.test.ts, src/sectors/hello-again-rest.ts, src/sectors/hello-mongo.ts, src/sectors/hello-rest.ts
+[34mCLI[39m Using tsconfig: tsconfig.json
+[34mCLI[39m tsup v8.5.0
+[34mCLI[39m Using tsup config: /home/spaul/dev/saga-soa/apps/examples/rest-api/tsup.config.ts
+[34mCLI[39m Target: es2022
+[34mCLI[39m Cleaning output folder
+[34mESM[39m Build start
+[32mESM[39m [1mdist/inversify.config.js               [22m[32m149.00 B[39m
+[32mESM[39m [1mdist/sectors/hello-again-rest.js       [22m[32m2.07 KB[39m
+[32mESM[39m [1mdist/main.js                           [22m[32m1.01 KB[39m
+[32mESM[39m [1mdist/chunk-O3KDZVJP.js                 [22m[32m1.03 KB[39m
+[32mESM[39m [1mdist/sectors/hello-mongo.js            [22m[32m2.87 KB[39m
+[32mESM[39m [1mdist/sectors/hello-rest.js             [22m[32m1.98 KB[39m
+[32mESM[39m [1mdist/chunk-6AXVLTU5.js                 [22m[32m2.20 KB[39m
+[32mESM[39m [1mdist/magic-string.es-RUC4VMQ7.js       [22m[32m41.57 KB[39m
+[32mESM[39m [1mdist/inversify.config.js.map           [22m[32m71.00 B[39m
+[32mESM[39m [1mdist/__tests__/integration.test.js     [22m[32m1.08 MB[39m
+[32mESM[39m [1mdist/sectors/hello-again-rest.js.map   [22m[32m1.36 KB[39m
+[32mESM[39m [1mdist/main.js.map                       [22m[32m2.23 KB[39m
+[32mESM[39m [1mdist/chunk-O3KDZVJP.js.map             [22m[32m2.41 KB[39m
+[32mESM[39m [1mdist/sectors/hello-mongo.js.map        [22m[32m2.54 KB[39m
+[32mESM[39m [1mdist/sectors/hello-rest.js.map         [22m[32m1.34 KB[39m
+[32mESM[39m [1mdist/chunk-6AXVLTU5.js.map             [22m[32m71.00 B[39m
+[32mESM[39m [1mdist/magic-string.es-RUC4VMQ7.js.map   [22m[32m88.43 KB[39m
+[32mESM[39m [1mdist/__tests__/integration.test.js.map [22m[32m2.16 MB[39m
+[32mESM[39m ⚡️ Build success in 164ms

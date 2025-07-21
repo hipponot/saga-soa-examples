@@ -1,0 +1,2 @@
+2025-07-21T17:10:03.600115Z  WARN daemon_server: turborepo_lib::commands::daemon: daemon already running
+2025-07-21T18:12:43.720078Z  WARN turborepo_lib::daemon::server: Root watcher triggering shutdown

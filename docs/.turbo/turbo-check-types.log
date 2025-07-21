@@ -1,0 +1,4 @@
+
+> docs@0.1.0 check-types /home/spaul/dev/saga-soa/apps/docs
+> tsc --noEmit
+
