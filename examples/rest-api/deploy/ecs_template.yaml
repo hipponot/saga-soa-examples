@@ -221,3 +221,13 @@ Resources:
       VpcId:
         Ref: VpcIdSSMParameter
       TargetType: ip
+      HealthCheckPath: /health
+      HealthCheckIntervalSeconds: 30
+      HealthCheckTimeoutSeconds: 10
+      HealthCheckHealthyThresholdCount: 2
+      HealthCheckUnhealthyThresholdCount: 3
+      HealthCheckMatcher:
+        HttpCode: "200"
+      Tags:
+        - Key: Group
+          Value: saga-soa-rest-api
