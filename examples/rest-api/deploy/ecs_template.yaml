@@ -1,0 +1,223 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Creating ECS dev DB services
+Parameters:
+  Identifier:
+    Type: String
+  VpcIdSSMParameter:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::VPC::Id>
+    Default: /dev/app/vpc-id
+  ClusterArnSSMParameter:
+    Type: AWS::SSM::Parameter::Value<AWS::ECS::Cluster::Id>
+    Default: /dev/ecs-cluster-arn
+  SubnetIdsSSMParameter:
+    Type: AWS::SSM::Parameter::Value<CommaDelimitedList>
+    Default: /dev/app/private-subnet-ids
+  AppSecurityGroupIdSSMParameter:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::SecurityGroup::Id>
+    Default: /dev/app/app-sg-id
+  ImageArn:
+    Type: String
+    Default: saga-soa-examples/examples/rest-api:latest
+  MongoImageArn:
+    Type: String
+    Default: mongo:8
+  MySqlImageArn:
+    Type: String
+    Default: mysql:8
+  RedisImageArn:
+    Type: String
+    Default: valkey/valkey:7.2-alpine
+  VpcEnv:
+    Type: String
+    Default: dev
+  DeploymentDatetime:
+    Type: String
+    Description:
+      This environment variable is used to force a new deployment so docker
+      image changes are applied.
+    Default: time_not_supplied
+  DesiredCount:
+    Type: Number
+    Default: 1
+Conditions:
+  IsProd:
+    Fn::Equals:
+      - Ref: VpcEnv
+      - prod
+Resources:
+  TaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: saga-soa-rest-api-dev-fargate
+      RequiresCompatibilities:
+        - FARGATE
+      Cpu: "1024"
+      Memory: "2048"
+      ContainerDefinitions:
+        - Name: saga_soa_rest_api
+          Image:
+            Ref: ImageArn
+          PortMappings:
+            - ContainerPort: 3000
+              HostPort: 3000
+              Name: saga_soa_rest_api
+          Environment:
+            - Name: NODE_ENV
+              Value: local
+          Essential: true
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-stream-prefix: ecs
+              awslogs-region: us-west-2
+              awslogs-create-group: "true"
+              awslogs-group:
+                Fn::Sub: /ecs/dev/saga-soa-rest-api/${Identifier}
+        - Name: redis
+          Image:
+            Ref: RedisImageArn
+          PortMappings:
+            - ContainerPort: 6379
+              HostPort: 6379
+              Name: redis
+          Command:
+            - redis-server
+            - --requirepass
+            - local
+          Essential: true
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-stream-prefix: ecs
+              awslogs-region: us-west-2
+              awslogs-create-group: "true"
+              awslogs-group:
+                Fn::Sub: /ecs/dev/redis/${Identifier}
+        - Name: mysql
+          Image:
+            Ref: MySqlImageArn
+          PortMappings:
+            - ContainerPort: 3306
+              HostPort: 3306
+              Name: mysql
+          Essential: true
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-region: us-west-2
+              awslogs-create-group: "true"
+              awslogs-group:
+                Fn::Sub: /ecs/dev/mysql/${Identifier}
+              awslogs-stream-prefix: ecs
+          Environment:
+            - Name: MYSQL_ROOT_PASSWORD
+              Value: local
+            - Name: DEPLOYMENT_DATETIME
+              Value:
+                Ref: DeploymentDatetime
+        - Name: mongo
+          Image:
+            Ref: MongoImageArn
+          PortMappings:
+            - ContainerPort: 27017
+              HostPort: 27017
+              Name: mongo
+          Essential: true
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-region: us-west-2
+              awslogs-create-group: "true"
+              awslogs-group:
+                Fn::Sub: /ecs/dev/mongo/${Identifier}
+              awslogs-stream-prefix: ecs
+          Environment:
+            - Name: DEPLOYMENT_DATETIME
+              Value:
+                Ref: DeploymentDatetime
+      NetworkMode: awsvpc
+      ExecutionRoleArn:
+        Fn::GetAtt:
+          - ExecutionRole
+          - Arn
+      TaskRoleArn:
+        Fn::GetAtt:
+          - TaskRole
+          - Arn
+    Metadata:
+      SamResourceId: TaskDefinition
+  ECSService:
+    Type: AWS::ECS::Service
+    Properties:
+      Cluster:
+        Ref: ClusterArnSSMParameter
+      DeploymentConfiguration:
+        MaximumPercent: 200
+        MinimumHealthyPercent: 100
+      DesiredCount:
+        Ref: DesiredCount
+      TaskDefinition:
+        Ref: TaskDefinition
+      ServiceName:
+        Fn::Sub: saga-soa-rest-api-${Identifier}
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          SecurityGroups:
+            - Ref: AppSecurityGroupIdSSMParameter
+          Subnets:
+            Ref: SubnetIdsSSMParameter
+      LoadBalancers:
+        - ContainerName: saga_soa_rest_api
+          ContainerPort: 3000
+          TargetGroupArn:
+            Ref: TargetGroup
+    Metadata:
+      SamResourceId: ECSService
+  ExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ecs-tasks.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+      Policies:
+        - PolicyName: LogsAccess
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:PutLogEvents
+                Resource:
+                  - arn:aws:logs:us-west-2:531314149529:log-group:/ecs/dev/mongo*
+                  - arn:aws:logs:us-west-2:531314149529:log-group:/ecs/dev/mysql*
+                  - arn:aws:logs:us-west-2:531314149529:log-group:/ecs/dev/redis*
+                  - arn:aws:logs:us-west-2:531314149529:log-group:/ecs/dev/saga-soa-rest-api*
+
+  TaskRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ecs-tasks.amazonaws.com
+            Action:
+              - sts:AssumeRole
+
+  TargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Name: saga-soa-rest-api-target-group
+      Port: 3000
+      Protocol: HTTP
+      VpcId:
+        Ref: VpcIdSSMParameter
+      TargetType: ip
