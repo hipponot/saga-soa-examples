@@ -1,0 +1,56 @@
+services:
+  rest-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URL=mongodb://mongodb:27017/saga_app
+      - PORT=3000
+      # Removed LOG_FILE - using stdout logging (Docker best practice)
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    # Removed logs volume - using stdout logging
+    networks:
+      - saga-network
+
+  mongodb:
+    image: mongo:8.0
+    container_name: saga-mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+      - MONGO_INITDB_DATABASE=saga_app
+    volumes:
+      - mongodb_data:/data/db
+      - ./mongo-init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - saga-network
+
+volumes:
+  mongodb_data:
+    driver: local
+  # Removed logs_data volume - using stdout logging
+
+networks:
+  saga-network:
+    driver: bridge
+    ipam:
+      config:
+      # need to set this  or it'll possibly use 172.19 which is the mirror subnet
+      # for reference:
+      # https://stackoverflow.com/a/39498534/4259404
+      # https://docs.docker.com/compose/compose-file/06-networks/#ipam
+        - subnet: 10.9.0.0/16
+          gateway: 10.9.0.1

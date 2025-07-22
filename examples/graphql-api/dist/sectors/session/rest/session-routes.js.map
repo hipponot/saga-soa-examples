@@ -1,1 +1,27 @@
-{"version":3,"sources":["../../../../src/sectors/session/rest/session-routes.ts"],"sourcesContent":["import { Get, Controller } from 'routing-controllers';\nimport { injectable, inject } from 'inversify';\nimport type { ILogger } from '@saga/soa-logger';\nimport { RestControllerBase, REST_API_BASE_PATH } from '@saga/soa-core-api/rest-controller';\n\nconst SECTOR = 'session';\n\n@Controller(`/${REST_API_BASE_PATH}/${SECTOR}`)\n@injectable()\nexport class SessionRestController extends RestControllerBase {\n  readonly sectorName = SECTOR;\n  constructor(@inject('ILogger') logger: ILogger) {\n    super(logger, SECTOR);\n  }\n\n  @Get('/test-route')\n  testRoute() {\n    this.logger.info('Session REST route hit');\n    return 'Session REST route OK';\n  }\n\n  async init() {\n    // Async setup if needed\n  }\n} "],"mappings":";;;;;AAAA,SAASA,KAAKC,kBAAkB;AAChC,SAASC,YAAYC,cAAc;AAEnC,SAASC,oBAAoBC,0BAA0B;;;;;;;;;;;;;;;;;;AAEvD,IAAMC,SAAS;AAIR,IAAMC,wBAAN,cAAoCC,mBAAAA;SAAAA;;;EAChCC,aAAaH;EACtB,YAA+BI,QAAiB;AAC9C,UAAMA,QAAQJ,MAAAA;EAChB;EAGAK,YAAY;AACV,SAAKD,OAAOE,KAAK,wBAAA;AACjB,WAAO;EACT;EAEA,MAAMC,OAAO;EAEb;AACF;;;;;;;;iBAjBgBC,kBAAAA,IAAsBR,MAAAA,EAAAA;;;;;;;;","names":["Get","Controller","injectable","inject","RestControllerBase","REST_API_BASE_PATH","SECTOR","SessionRestController","RestControllerBase","sectorName","logger","testRoute","info","init","REST_API_BASE_PATH"]}
+{
+    "version": 3,
+    "sources": [
+        "../../../../src/sectors/session/rest/session-routes.ts"
+    ],
+    "sourcesContent": [
+        "import { Get, Controller } from 'routing-controllers';\nimport { injectable, inject } from 'inversify';\nimport type { ILogger } from '@hipponot/soa-logger';\nimport { RestControllerBase, REST_API_BASE_PATH } from '@hipponot/soa-core-api/rest-controller';\n\nconst SECTOR = 'session';\n\n@Controller(`/${REST_API_BASE_PATH}/${SECTOR}`)\n@injectable()\nexport class SessionRestController extends RestControllerBase {\n  readonly sectorName = SECTOR;\n  constructor(@inject('ILogger') logger: ILogger) {\n    super(logger, SECTOR);\n  }\n\n  @Get('/test-route')\n  testRoute() {\n    this.logger.info('Session REST route hit');\n    return 'Session REST route OK';\n  }\n\n  async init() {\n    // Async setup if needed\n  }\n} "
+    ],
+    "mappings": ";;;;;AAAA,SAASA,KAAKC,kBAAkB;AAChC,SAASC,YAAYC,cAAc;AAEnC,SAASC,oBAAoBC,0BAA0B;;;;;;;;;;;;;;;;;;AAEvD,IAAMC,SAAS;AAIR,IAAMC,wBAAN,cAAoCC,mBAAAA;SAAAA;;;EAChCC,aAAaH;EACtB,YAA+BI,QAAiB;AAC9C,UAAMA,QAAQJ,MAAAA;EAChB;EAGAK,YAAY;AACV,SAAKD,OAAOE,KAAK,wBAAA;AACjB,WAAO;EACT;EAEA,MAAMC,OAAO;EAEb;AACF;;;;;;;;iBAjBgBC,kBAAAA,IAAsBR,MAAAA,EAAAA;;;;;;;;",
+    "names": [
+        "Get",
+        "Controller",
+        "injectable",
+        "inject",
+        "RestControllerBase",
+        "REST_API_BASE_PATH",
+        "SECTOR",
+        "SessionRestController",
+        "RestControllerBase",
+        "sectorName",
+        "logger",
+        "testRoute",
+        "info",
+        "init",
+        "REST_API_BASE_PATH"
+    ]
+}

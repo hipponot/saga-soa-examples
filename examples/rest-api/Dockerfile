@@ -1,41 +1,19 @@
-# syntax=docker/dockerfile:1
+#syntax=docker/dockerfile:1.7
 
 # Build stage  
 FROM node:20-alpine AS builder
 
-# Accept AWS credentials as build args
-ARG AWS_ACCESS_KEY_ID
-ARG AWS_SECRET_ACCESS_KEY  
-ARG AWS_SESSION_TOKEN
-ARG AWS_REGION=us-west-2
-
-ENV AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
-ENV AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-ENV AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN
-ENV AWS_REGION=$AWS_REGION
-
-RUN apk add --no-cache aws-cli pnpm
-
-# Install pnpm with .npmrc access
-RUN --mount=type=secret,id=npmrc,target=/tmp/.npmrc \
-    cp /tmp/.npmrc /root/.npmrc && \
-    npm install -g pnpm@9.0.0
+# Install pnpm
+RUN npm install -g pnpm@9.0.0
 
 # Set working directory
 WORKDIR /app
 
-# Copy workspace files
-COPY package.json ./
-COPY tsconfig.docker.json ./tsconfig.json
-COPY tsup.config.ts ./
-COPY src/ ./src/
+# Copy the entire context (includes both repos when built from parent)
+COPY . .
 
-# Authenticate with CodeArtifact and install dependencies
-RUN --mount=type=secret,id=npmrc,target=/tmp/.npmrc \
-    cp /tmp/.npmrc /root/.npmrc && \
-    export CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain saga --query authorizationToken --output text) && \
-    npm config set //saga-531314149529.d.codeartifact.us-west-2.amazonaws.com/npm/saga_js/:_authToken=$CODEARTIFACT_AUTH_TOKEN && \
-    pnpm install
+# Install dependencies 
+RUN pnpm install --frozen-lockfile
 
 # Build the project
 RUN pnpm build
@@ -45,15 +23,23 @@ FROM node:20-alpine AS runner
 
 WORKDIR /app
 
-# Copy built application
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/package.json ./
+  # Create non-root user for security
+  RUN addgroup -g 1001 -S nodejs && \
+      adduser -S nextjs -u 1001
+  
+  # Copy with ownership set immediately - FAST! (Correct paths from builder stage)
+  COPY --from=builder --chown=nextjs:nodejs /app/dist ./dist
+  COPY --from=builder --chown=nextjs:nodejs /app/package.json ./
+  COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
 
-# Copy necessary dependencies
-COPY --from=builder /app/node_modules ./node_modules
+USER nextjs
 
-# Expose port (adjust based on your app configuration)
+# Expose port
 EXPOSE 3000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD node -e "const http = require('http'); const options = { host: 'localhost', port: 3000, path: '/health', timeout: 2000 }; const req = http.request(options, (res) => { process.exit(res.statusCode === 200 ? 0 : 1); }); req.on('error', () => process.exit(1)); req.end();"
 
 # Start the application
 CMD ["node", "dist/main.js"]

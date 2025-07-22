@@ -5,7 +5,7 @@ import {
 // src/sectors/session/rest/session-routes.ts
 import { Get, Controller } from "routing-controllers";
 import { injectable, inject } from "inversify";
-import { RestControllerBase, REST_API_BASE_PATH } from "@saga/soa-core-api/rest-controller";
+import { RestControllerBase, REST_API_BASE_PATH } from "@hipponot/soa-core-api/rest-controller";
 function _ts_decorate(decorators, target, key, desc) {
   var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
   if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,7 +18,7 @@ function _ts_metadata(k, v) {
 }
 __name(_ts_metadata, "_ts_metadata");
 function _ts_param(paramIndex, decorator) {
-  return function(target, key) {
+  return function (target, key) {
     decorator(target, key, paramIndex);
   };
 }

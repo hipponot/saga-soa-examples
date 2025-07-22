@@ -1,0 +1,17 @@
+default:
+  deploy:
+    parameters:
+      stack_name: soa-example-rest-api
+      resolve_s3: true
+      s3_prefix: soa-example-rest-api
+      region: us-west-2
+      capabilities: CAPABILITY_IAM
+      parameter_overrides: Vpc=/saga-soa/vpc/id
+        PrivateSubnets=/saga-soa/private-subnets/id
+        ECSCluster=/saga-soa/ecs-cluster/id
+        AppSecurityGroup=/saga-soa/app-security-group/id
+        ALBSecurityGroup=/saga-soa/alb-security-group/id
+        ALB=/saga-soa/alb/id
+        ImageId=nginxdemos/hello:plain-text
+      image_repositories: []
+version: 0.1
