@@ -1,9 +1,9 @@
 // src/inversify.config.ts
 import { Container } from "inversify";
-import { MONGO_CLIENT } from "@saga/soa-db";
-import { MockMongoProvider } from "@saga/soa-db/mocks/mock-mongo-provider";
-import { PinoLogger } from "@saga/soa-logger";
-import { ExpressServer } from "@saga/soa-core-api/express-server";
+import { MONGO_CLIENT } from "@hipponot/soa-db";
+import { MockMongoProvider } from "@hipponot/soa-db/mocks/mock-mongo-provider";
+import { PinoLogger } from "@hipponot/soa-logger";
+import { ExpressServer } from "@hipponot/soa-core-api/express-server";
 var container = new Container();
 var loggerConfig = {
   configType: "PINO_LOGGER",

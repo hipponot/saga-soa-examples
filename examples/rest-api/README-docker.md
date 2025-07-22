@@ -25,17 +25,26 @@ docker run -p 3000:3000 rest-api
 
 ### Option 2: Manual build
 ```bash
-# Export AWS credentials from current SSO session
+# Create temporary AWS credentials file
+TEMP_CREDS_FILE=$(mktemp)
 eval $(aws configure export-credentials --format env)
+cat > "$TEMP_CREDS_FILE" << EOF
+[default]
+aws_access_key_id = $AWS_ACCESS_KEY_ID
+aws_secret_access_key = $AWS_SECRET_ACCESS_KEY
+aws_session_token = $AWS_SESSION_TOKEN
+region = us-west-2
+EOF
 
-# Build with secrets
+# Build with secrets (secure approach)
 docker build \
-  --build-arg AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
-  --build-arg AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
-  --build-arg AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN \
   --secret id=npmrc,src=$HOME/.npmrc \
+  --secret id=aws-credentials,src="$TEMP_CREDS_FILE" \
   -t rest-api \
   .
+
+# Clean up
+rm -f "$TEMP_CREDS_FILE"
 ```
 
 ## Troubleshooting
@@ -56,7 +65,15 @@ chmod +x build.sh
 
 ## How it Works
 
-- Uses Docker secrets to securely mount your `~/.npmrc` (never stored in image)
-- Passes AWS SSO credentials as build arguments (only used during build)
-- Automatically handles temporary AWS SSO tokens
-- Works with any AWS SSO profile configuration 
+- **Secure credential handling**: Uses Docker secrets to securely mount AWS credentials (never stored in image layers)
+- **No credential exposure**: AWS credentials are passed as temporary mounted files, not build arguments
+- **Automatic cleanup**: Temporary credential files are automatically removed after build
+- **Zero security warnings**: No credentials stored in Docker history or image layers
+- **SSO compatibility**: Works seamlessly with AWS SSO temporary tokens
+
+## Security Features
+
+✅ **No credentials in image layers**  
+✅ **No credentials in Docker history**  
+✅ **Temporary credential files auto-cleaned**  
+✅ **Follows Docker security best practices** 

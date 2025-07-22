@@ -16,7 +16,7 @@ import {
 // src/sectors/session/gql/session.resolver.ts
 import { Query, Resolver, Arg, Mutation } from "type-graphql";
 import { inject } from "inversify";
-import { GQLControllerBase } from "@saga/soa-core-api/gql-controller";
+import { GQLControllerBase } from "@hipponot/soa-core-api/gql-controller";
 import { v4 as uuidv4 } from "uuid";
 function _ts_decorate(decorators, target, key, desc) {
   var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -30,7 +30,7 @@ function _ts_metadata(k, v) {
 }
 __name(_ts_metadata, "_ts_metadata");
 function _ts_param(paramIndex, decorator) {
-  return function(target, key) {
+  return function (target, key) {
     decorator(target, key, paramIndex);
   };
 }

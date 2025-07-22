@@ -1,10 +1,10 @@
 import 'reflect-metadata';
-import { ExpressServer } from '@saga/soa-core-api/express-server';
-import type { ExpressServerConfig } from '@saga/soa-core-api/express-server-schema';
+import { ExpressServer } from '@hipponot/soa-core-api/express-server';
+import type { ExpressServerConfig } from '@hipponot/soa-core-api/express-server-schema';
 import { container } from './inversify.config.js';
-import { loadControllers } from '@saga/soa-core-api/utils/loadControllers';
-import { RestControllerBase } from '@saga/soa-core-api/rest-controller';
-import { GQLControllerBase } from '@saga/soa-core-api/gql-controller';
+import { loadControllers } from '@hipponot/soa-core-api/utils/loadControllers';
+import { RestControllerBase } from '@hipponot/soa-core-api/rest-controller';
+import { GQLControllerBase } from '@hipponot/soa-core-api/gql-controller';
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import { buildSchema } from 'type-graphql';
