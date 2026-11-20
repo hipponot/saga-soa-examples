@@ -8,6 +8,7 @@ ARG AWS_ACCESS_KEY_ID
 ARG AWS_SECRET_ACCESS_KEY  
 ARG AWS_SESSION_TOKEN
 ARG AWS_REGION=us-west-2
+ARG AWS_ACCOUNT_ID
 
 ENV AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
 ENV AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
@@ -34,7 +35,7 @@ COPY src/ ./src/
 RUN --mount=type=secret,id=npmrc,target=/tmp/.npmrc \
     cp /tmp/.npmrc /root/.npmrc && \
     export CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain saga --query authorizationToken --output text) && \
-    npm config set //saga-531314149529.d.codeartifact.us-west-2.amazonaws.com/npm/saga_js/:_authToken=$CODEARTIFACT_AUTH_TOKEN && \
+    npm config set //saga-${AWS_ACCOUNT_ID}.d.codeartifact.us-west-2.amazonaws.com/npm/saga_js/:_authToken=$CODEARTIFACT_AUTH_TOKEN && \
     pnpm install
 
 # Build the project
